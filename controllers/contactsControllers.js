@@ -46,10 +46,10 @@ export const deleteContact = async (req, res, next) => {
   }
 };
 
-export const updateContact = async (req, res) => {
+export const updateContact = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const result = await contactsService.updateContactById(id, req.body);
+    const result = await contactsService.updateContact(id, req.body);
     if (!result) {
       throw HttpError(404);
     }
