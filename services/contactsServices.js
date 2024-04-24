@@ -1,6 +1,3 @@
-// const fs = require("node:fs/promises");
-// const path = require("path");
-// const { nanoid } = require("nanoid");
 import fs from "node:fs/promises";
 import path from "node:path";
 import { nanoid } from "nanoid";
@@ -45,7 +42,6 @@ async function updateContact(id, data) {
   if (index === -1) {
     return null;
   }
-  //   contacts[index] = { id, ...data };
   contacts[index] = { ...contacts[index], ...data };
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
 

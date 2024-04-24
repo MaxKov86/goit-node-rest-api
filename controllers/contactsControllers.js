@@ -53,7 +53,7 @@ export const updateContact = async (req, res, next) => {
     if (!result) {
       throw HttpError(404);
     }
-    res.json(result);
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }
