@@ -4,8 +4,7 @@ import cors from "cors";
 import contactsRouter from "./routes/contactsRouter.js";
 import mongoose from "mongoose";
 
-const DB_HOST =
-  "mongodb+srv://Maksym:lbyProud4xm3pNGS@cluster0.f1ifhm0.mongodb.net/db-contacts?retryWrites=true&w=majority&appName=Cluster0";
+const { DB_HOST } = process.env;
 
 mongoose
   .connect(DB_HOST)
