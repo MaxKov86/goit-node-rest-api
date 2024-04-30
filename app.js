@@ -3,13 +3,16 @@ import morgan from "morgan";
 import cors from "cors";
 import contactsRouter from "./routes/contactsRouter.js";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-const { DB_HOST } = process.env;
+dotenv.config();
+
+const { DB_HOST, PORT = 3000 } = process.env;
 
 mongoose
   .connect(DB_HOST)
   .then(() => {
-    app.listen(3000);
+    app.listen(PORT);
     console.log("Database connection successful");
   })
   .catch((error) => {
