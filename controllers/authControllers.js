@@ -39,11 +39,31 @@ export const login = async (req, res, next) => {
     }
     const payload = { id: user._id };
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+    await User.findByIdAndUpdate(user._id, { token });
 
     res.json({
       token,
       user: { subscription: user.subscription, email: user.email },
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getCurrent = async (req, res, next) => {
+  try {
+    const { email, subscription } = await req.user;
+    res.json({ email, subscription });
+  } catch {
+    next(error);
+  }
+};
+
+export const logout = async (req, res, next) => {
+  const { _id } = req.user;
+  try {
+    await User.findByIdAndUpdate(_id, { token: null });
+    res.status(204).json({ message: "No content" });
   } catch (error) {
     next(error);
   }
