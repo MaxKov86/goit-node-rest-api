@@ -52,7 +52,7 @@ export const login = async (req, res, next) => {
 
 export const getCurrent = async (req, res, next) => {
   try {
-    const { email, subscription } = await req.user;
+    const { email, subscription } = req.user;
     res.json({ email, subscription });
   } catch {
     next(error);
