@@ -6,6 +6,7 @@ export const getAllContacts = async (req, res, next) => {
   const { _id: owner } = req.user;
   const { page = 1, limit = 20 } = req.query;
   const skip = (page - 1) * limit;
+
   try {
     const result = await Contact.find({ owner }, "-createdAt -updatedAt", {
       skip,
@@ -18,12 +19,16 @@ export const getAllContacts = async (req, res, next) => {
 };
 
 export const getOneContact = async (req, res, next) => {
+  const { id } = req.params;
+  const { _id: owner } = req.user;
+
   try {
-    const { id } = req.params;
-    const result = await Contact.findById(id);
+    const result = await Contact.findOne({ _id: id, owner });
+
     if (!result) {
       throw HttpError(404);
     }
+
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -32,6 +37,7 @@ export const getOneContact = async (req, res, next) => {
 
 export const createContact = async (req, res, next) => {
   const { _id: owner } = req.user;
+
   try {
     const result = await Contact.create({ ...req.body, owner });
 
@@ -42,9 +48,11 @@ export const createContact = async (req, res, next) => {
 };
 
 export const deleteContact = async (req, res, next) => {
+  const { id } = req.params;
+  const { _id: owner } = req.user;
+
   try {
-    const { id } = req.params;
-    const result = await Contact.findByIdAndDelete(id);
+    const result = await Contact.findOneAndDelete({ _id: id, owner });
     if (!result) {
       throw HttpError(404);
     }
@@ -55,9 +63,16 @@ export const deleteContact = async (req, res, next) => {
 };
 
 export const updateContact = async (req, res, next) => {
+  const { id } = req.params;
+  const { _id: owner } = req.user;
+
   try {
-    const { id } = req.params;
-    const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+    const result = await Contact.findOneAndUpdate(
+      { _id: id, owner },
+      req.body,
+
+      { new: true }
+    );
     if (!result) {
       throw HttpError(404);
     }
@@ -67,9 +82,16 @@ export const updateContact = async (req, res, next) => {
   }
 };
 export const updateStatusContact = async (req, res, next) => {
+  const { id } = req.params;
+  const { _id: owner } = req.user;
+
   try {
-    const { id } = req.params;
-    const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+    const result = await Contact.findOneAndUpdate(
+      { _id: id, owner },
+      req.body,
+
+      { new: true }
+    );
     if (!result) {
       throw HttpError(404);
     }

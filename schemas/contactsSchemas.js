@@ -15,7 +15,7 @@ export const updateContactSchema = Joi.object({
     minDomainSegments: 2,
     tlds: { allow: ["com", "net"] },
   }),
-  phone: Joi.string().min(3).max(13),
+  phone: Joi.string().min(3).max(15),
   favorite: Joi.boolean(),
 });
 
