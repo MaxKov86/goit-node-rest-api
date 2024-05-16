@@ -1,5 +1,5 @@
 import User from "../models/user.js";
-import path from "path";
+import path from "node:path";
 import fs from "node:fs/promises";
 
 export const updateAvatar = async (req, res, next) => {
@@ -7,11 +7,11 @@ export const updateAvatar = async (req, res, next) => {
   try {
     await fs.rename(
       req.file.path,
-      path.resolve("public/avatars", req.file.filname)
+      path.resolve("public/avatars", req.file.filename)
     );
     const user = await User.findByIdAndUpdate(
       _id,
-      { avatar: req.file.filname },
+      { avatar: req.file.filename },
       { new: true }
     );
     res.json(user);

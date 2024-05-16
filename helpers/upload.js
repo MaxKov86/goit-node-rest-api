@@ -1,5 +1,6 @@
 import multer from "multer";
-import path from "path";
+import path from "node:path";
+import crypto from 'node:crypto';
 
 const multerConfig = multer.diskStorage({
   destination: (req, file, cb) => {
