@@ -15,10 +15,10 @@ export const updateAvatar = async (req, res, next) => {
 
     const user = await User.findByIdAndUpdate(
       _id,
-      { avatarURL: path.resolve("public/avatars", req.file.filename) },
+      { avatarURL: req.file.filename },
       { new: true }
     );
-    res.json(user.avatarURL);
+    res.json({ avatarURL: path.join(avatarDir, user.avatarURL) });
   } catch (error) {
     next(error);
   }
