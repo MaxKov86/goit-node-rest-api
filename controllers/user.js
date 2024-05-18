@@ -11,15 +11,14 @@ export const updateAvatar = async (req, res, next) => {
     const avatar = await jimp.read(req.file.path);
     await avatar.resize(250, 250);
     await avatar.writeAsync(path.resolve("public/avatars", req.file.filename));
-
     await fs.rm(req.file.path);
 
     const user = await User.findByIdAndUpdate(
       _id,
-      { avatarURL: req.file.filename },
+      { avatarURL: path.resolve("public/avatars", req.file.filename) },
       { new: true }
     );
-    res.json({ avatarURL: user.avatarURL });
+    res.json(user.avatarURL);
   } catch (error) {
     next(error);
   }
