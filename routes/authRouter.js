@@ -7,10 +7,15 @@ import {
   login,
   getCurrent,
 } from "../controllers/authControllers.js";
-import { updateAvatar } from "../controllers/user.js";
+import {
+  resendingVerifyEmail,
+  updateAvatar,
+  verify,
+} from "../controllers/user.js";
 
 import authenticate from "../helpers/authenticate.js";
 import upload from "../helpers/upload.js";
+import { emailSchema } from "../schemas/emailSchema.js";
 
 const authRouter = express.Router();
 
@@ -24,5 +29,7 @@ authRouter.patch(
   upload.single("avatar"),
   updateAvatar
 );
+authRouter.get("/verify/:verificationToken", verify);
+authRouter.post("/verify", validateBody(emailSchema), resendingVerifyEmail);
 
 export default authRouter;
